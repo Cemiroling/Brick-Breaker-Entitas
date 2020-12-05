@@ -24,7 +24,8 @@ public class InitializeBlockGridSystem : IInitializeSystem
                         block.AddPosition(new Vector2(j - 4.5f, i + 0.5f + Screen.height / 200f - _contexts.game.gameData.value.visibleArea));
                         block.AddHealth(_contexts.game.gameData.value.blockStats.health);
                         block.AddBlockType(BlockType.SquareBlock);
-                        block.isBlock = true;                    
+                        block.AddScaleMultiplier(_contexts.game.gameData.value.blockStats.scale);
+                        block.isBlock = true;
                         break;
                     case 2:
                         var bomb = _contexts.game.CreateEntity();
@@ -33,6 +34,7 @@ public class InitializeBlockGridSystem : IInitializeSystem
                         bomb.AddBlockType(BlockType.Bomb);
                         bomb.AddDamage(_contexts.game.gameData.value.bombStats.damage);
                         bomb.AddRadius(_contexts.game.gameData.value.bombStats.area);
+                        bomb.AddScaleMultiplier(_contexts.game.gameData.value.bombStats.scale);
                         bomb.isBlock = true;
                         break;
                     case 3:
@@ -43,6 +45,7 @@ public class InitializeBlockGridSystem : IInitializeSystem
                         laser.AddDamage(_contexts.game.gameData.value.laserStats.damage);
                         laser.AddLaserDirections(_contexts.game.gameData.value.laserStats.angles);
                         laser.AddRadius(_contexts.game.gameData.value.laserStats.range);
+                        laser.AddScaleMultiplier(_contexts.game.gameData.value.laserStats.scale);
                         laser.isBlock = true;
                         break;
                 }

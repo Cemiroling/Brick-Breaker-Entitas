@@ -49,10 +49,10 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                                 //    Color.white, 0.5f);
 
                                 if ((entity.collision.self.position.value.x - 0.5f - entity.collision.self.radius.value
-                                    < block.position.value.x - 0.5f + (i % 2) && block.position.value.x - 0.5f + (i % 2)
+                                    < block.position.value.x + block.scaleMultiplier.value * (i % 2 - 0.5) && block.position.value.x - block.scaleMultiplier.value * ((i % 2) - 0.5)
                                     < entity.collision.self.position.value.x + 0.5f + entity.collision.self.radius.value) &&
-                                    (entity.collision.self.position.value.y - 0.5f - entity.collision.self.radius.value
-                                    < block.position.value.y - 0.5f + (i / 2) && block.position.value.y - 0.5f + (i / 2)
+                                    (entity.collision.self.position.value.y - block.scaleMultiplier.value / 2 - entity.collision.self.radius.value
+                                    < block.position.value.y - block.scaleMultiplier.value / 2 + (i / 2) && block.position.value.y - block.scaleMultiplier.value / 2 + (i / 2)
                                     < entity.collision.self.position.value.y + 0.5f + entity.collision.self.radius.value))
                                 {
                                     block.health.value -= entity.collision.self.damage.value;
@@ -118,13 +118,15 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                     foreach (var block in _blockGroup.GetEntities())
                     {
                         if (block.blockType.type == BlockType.SquareBlock &&
-                            (block.position.value - entity.collision.self.position.value).sqrMagnitude <= (entity.collision.self.radius.value + 0.5f) * (entity.collision.self.radius.value + 0.5f))
+                            (block.position.value - entity.collision.self.position.value).sqrMagnitude <= 
+                            (entity.collision.self.radius.value + entity.collision.self.scaleMultiplier.value / 2 + block.scaleMultiplier.value / 2) * 
+                            (entity.collision.self.radius.value + entity.collision.self.scaleMultiplier.value / 2+ block.scaleMultiplier.value / 2))
                         {
                             foreach (float angle in entity.collision.self.laserDirections.angle)
                             {
                                 for (int i = 0; i < 9; i++)
                                 {
-                                    offset = new Vector2((0.5f * (i % 3)) - 0.5f, (0.5f * (i / 3)) - 0.5f);
+                                    offset = new Vector2(((block.scaleMultiplier.value / 2) * (i % 3)) - (block.scaleMultiplier.value / 2), ((block.scaleMultiplier.value / 2) * (i / 3)) - (block.scaleMultiplier.value / 2));
                                     rotatedCorner = Rotate(block.position.value - entity.collision.self.position.value + offset, -angle * Mathf.Deg2Rad) + entity.collision.self.position.value;
                                     //DrawLine(entity.collision.self.position.value, rotatedCorner, Color.white, 0.4f);
                                     if ((entity.collision.self.position.value.x - 0.5f - entity.collision.self.radius.value

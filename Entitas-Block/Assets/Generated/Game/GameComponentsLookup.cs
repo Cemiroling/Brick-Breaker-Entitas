@@ -17,28 +17,30 @@ public static class GameComponentsLookup {
     public const int ClickInput = 6;
     public const int Collision = 7;
     public const int Damage = 8;
-    public const int Destroy = 9;
-    public const int Direction = 10;
-    public const int GameData = 11;
-    public const int Globals = 12;
-    public const int Health = 13;
-    public const int Iteration = 14;
-    public const int LaserDirections = 15;
-    public const int MoveBlock = 16;
-    public const int MoveInput = 17;
-    public const int NewPointerPosition = 18;
-    public const int Pointer = 19;
-    public const int Position = 20;
-    public const int Prefab = 21;
-    public const int Radius = 22;
-    public const int SetNewPointerPosition = 23;
-    public const int SpawnBall = 24;
-    public const int Text = 25;
-    public const int Timer = 26;
-    public const int TimerEnd = 27;
-    public const int UIRoot = 28;
+    public const int Data = 9;
+    public const int Destroy = 10;
+    public const int Direction = 11;
+    public const int GameData = 12;
+    public const int Globals = 13;
+    public const int Health = 14;
+    public const int Iteration = 15;
+    public const int LaserDirections = 16;
+    public const int MoveBlock = 17;
+    public const int MoveInput = 18;
+    public const int NewPointerPosition = 19;
+    public const int Pointer = 20;
+    public const int Position = 21;
+    public const int Prefab = 22;
+    public const int Radius = 23;
+    public const int ScaleMultiplier = 24;
+    public const int SetNewPointerPosition = 25;
+    public const int SpawnBall = 26;
+    public const int Text = 27;
+    public const int Timer = 28;
+    public const int TimerEnd = 29;
+    public const int UIRoot = 30;
 
-    public const int TotalComponents = 29;
+    public const int TotalComponents = 31;
 
     public static readonly string[] componentNames = {
         "Ball",
@@ -50,6 +52,7 @@ public static class GameComponentsLookup {
         "ClickInput",
         "Collision",
         "Damage",
+        "Data",
         "Destroy",
         "Direction",
         "GameData",
@@ -64,6 +67,7 @@ public static class GameComponentsLookup {
         "Position",
         "Prefab",
         "Radius",
+        "ScaleMultiplier",
         "SetNewPointerPosition",
         "SpawnBall",
         "Text",
@@ -82,6 +86,7 @@ public static class GameComponentsLookup {
         typeof(ClickInputComponent),
         typeof(CollisionComponent),
         typeof(DamageComponent),
+        typeof(DataComponent),
         typeof(DestroyComponent),
         typeof(DirectionComponent),
         typeof(GameDataComponent),
@@ -96,6 +101,7 @@ public static class GameComponentsLookup {
         typeof(PositionComponent),
         typeof(PrefabComponent),
         typeof(RadiusComponent),
+        typeof(ScaleMultiplierComponent),
         typeof(SetNewPointerPositionComponent),
         typeof(SpawnBallComponent),
         typeof(TextComponent),

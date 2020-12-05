@@ -3,24 +3,27 @@ using Entitas.CodeGeneration.Attributes;
 using UnityEngine;
 
 [Game, Unique]
-public class GameData : IComponent
+public class GameData
 {
     public int[,] map;
     public struct BlockStats
     {
         public int health;
+        public float scale;
     }
     public struct BombStats
     {
         public int health;
         public int damage;
         public int area;
+        public float scale;
     }
     public struct LaserStats
     {
         public int health;
         public int damage;
         public int range;
+        public float scale;
         public float[] angles;
     }
 

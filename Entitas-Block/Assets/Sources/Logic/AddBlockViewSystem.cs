@@ -21,7 +21,8 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
             Text text = GameObject.Instantiate(textPref, uiRoot);
             text.text = entity.health.value.ToString();
             RectTransform textTransform = text.GetComponent<RectTransform>();
-            textTransform.anchoredPosition = new Vector2(entity.position.value.x * 100, entity.position.value.y * 100);        
+            textTransform.anchoredPosition = new Vector2(entity.position.value.x * 100, entity.position.value.y * 100);
+            textTransform.localScale *= entity.scaleMultiplier.value;
             entity.AddText(text);
             if (entity.blockType.type == BlockType.SquareBlock)
             {
@@ -31,6 +32,7 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
                 if (entity.hasPosition)
                 {
                     gameobject.transform.position = entity.position.value;
+                    gameobject.transform.localScale *= entity.scaleMultiplier.value;
                 }
             }
             if (entity.blockType.type == BlockType.Bomb)
@@ -41,6 +43,7 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
                 if (entity.hasPosition)
                 {
                     gameobject.transform.position = entity.position.value;
+                    gameobject.transform.localScale *= entity.scaleMultiplier.value;
                 }
             }
             if (entity.blockType.type == BlockType.Laser)
@@ -51,6 +54,7 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
                 if (entity.hasPosition)
                 {
                     gameobject.transform.position = entity.position.value;
+                    gameobject.transform.localScale *= entity.scaleMultiplier.value;
                 }
             }
         }
