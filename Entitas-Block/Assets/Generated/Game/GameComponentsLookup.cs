@@ -39,8 +39,9 @@ public static class GameComponentsLookup {
     public const int Timer = 28;
     public const int TimerEnd = 29;
     public const int UIRoot = 30;
+    public const int Viewable = 31;
 
-    public const int TotalComponents = 31;
+    public const int TotalComponents = 32;
 
     public static readonly string[] componentNames = {
         "Ball",
@@ -73,7 +74,8 @@ public static class GameComponentsLookup {
         "Text",
         "Timer",
         "TimerEnd",
-        "UIRoot"
+        "UIRoot",
+        "Viewable"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -107,6 +109,7 @@ public static class GameComponentsLookup {
         typeof(TextComponent),
         typeof(TimerComponent),
         typeof(TimerEndComponent),
-        typeof(UIRootComponent)
+        typeof(UIRootComponent),
+        typeof(ViewableComponent)
     };
 }

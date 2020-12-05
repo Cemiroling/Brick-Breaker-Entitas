@@ -25,9 +25,20 @@ public class MovingBlockSystem : ReactiveSystem<GameEntity>
             foreach (var block in _blockGroup)
             {
                 block.position.value.y--;
-                block.prefab.prefab.transform.position += minusPosition3;
-                RectTransform textTransform = block.text.value.GetComponent<RectTransform>();
-                textTransform.anchoredPosition += minusPosition2 * 100;
+                if (block.position.value.y < Screen.height / 200f)
+                {
+                    if (block.isViewable)
+                    {
+                        block.prefab.prefab.transform.position += minusPosition3;
+                        RectTransform textTransform = block.text.value.GetComponent<RectTransform>();
+                        textTransform.anchoredPosition += minusPosition2 * 100;
+                    }
+                    else
+                    {
+                        Debug.Log("Works");
+                        block.isViewable = true;
+                    }
+                }
             }
         }
 

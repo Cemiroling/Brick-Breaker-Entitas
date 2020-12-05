@@ -22,6 +22,8 @@ public class InitializeBlockGridSystem : IInitializeSystem
                     case 1:
                         var block = _contexts.game.CreateEntity();
                         block.AddPosition(new Vector2(j - 4.5f, i + 0.5f + Screen.height / 200f - _contexts.game.gameData.value.visibleArea));
+                        if (block.position.value.y < Screen.height / 200f)
+                            block.isViewable = true;
                         block.AddHealth(_contexts.game.gameData.value.blockStats.health);
                         block.AddBlockType(BlockType.SquareBlock);
                         block.AddScaleMultiplier(_contexts.game.gameData.value.blockStats.scale);
@@ -30,6 +32,8 @@ public class InitializeBlockGridSystem : IInitializeSystem
                     case 2:
                         var bomb = _contexts.game.CreateEntity();
                         bomb.AddPosition(new Vector2(j - 4.5f, i + 0.5f + Screen.height / 200f - _contexts.game.gameData.value.visibleArea));
+                        if (bomb.position.value.y < Screen.height / 200f)
+                            bomb.isViewable = true;
                         bomb.AddHealth(_contexts.game.gameData.value.bombStats.health);
                         bomb.AddBlockType(BlockType.Bomb);
                         bomb.AddDamage(_contexts.game.gameData.value.bombStats.damage);
@@ -40,6 +44,8 @@ public class InitializeBlockGridSystem : IInitializeSystem
                     case 3:
                         var laser = _contexts.game.CreateEntity();
                         laser.AddPosition(new Vector2(j - 4.5f, i + 0.5f + Screen.height / 200f - _contexts.game.gameData.value.visibleArea));
+                        if (laser.position.value.y < Screen.height / 200f)
+                            laser.isViewable = true;
                         laser.AddHealth(_contexts.game.gameData.value.laserStats.health);
                         laser.AddBlockType(BlockType.Laser);
                         laser.AddDamage(_contexts.game.gameData.value.laserStats.damage);

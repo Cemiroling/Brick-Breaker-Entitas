@@ -7,15 +7,17 @@ using UnityEngine.UI;
 public class AddBlockViewSystem : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
+    private RectTransform uiRoot;
+    private Text textPref;
     public AddBlockViewSystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
+        uiRoot = _contexts.game.uIRoot.value;
+        textPref = _contexts.game.text.value;
     }
 
     protected override void Execute(List<GameEntity> entities)
     {
-        RectTransform uiRoot = _contexts.game.uIRoot.value;
-        Text textPref = _contexts.game.text.value;
         foreach (var entity in entities)
         {
             Text text = GameObject.Instantiate(textPref, uiRoot);
@@ -62,11 +64,11 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
 
     protected override bool Filter(GameEntity entity)
     {
-        return entity.isBlock && entity.hasPosition && entity.hasBlockType;
+        return entity.isBlock && entity.hasPosition && entity.hasBlockType && entity.isViewable;
     }
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
     {
-        return context.CreateCollector(GameMatcher.AllOf(GameMatcher.Block, GameMatcher.Position, GameMatcher.BlockType));
+        return context.CreateCollector(GameMatcher.AllOf(GameMatcher.Block, GameMatcher.Position, GameMatcher.BlockType, GameMatcher.Viewable));
     }
 }

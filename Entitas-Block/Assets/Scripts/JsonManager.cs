@@ -26,7 +26,7 @@ public class JsonManager
 
         gameData.map = _map;
         gameData.ballsNumber = 12;
-        gameData.visibleArea = 13;
+        gameData.visibleArea = 5;
 
         gameData.blockStats.health = 88;
         gameData.blockStats.scale = 1f;

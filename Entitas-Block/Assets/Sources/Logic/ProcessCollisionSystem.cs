@@ -10,7 +10,7 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
     public ProcessCollisionSystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
-        _blockGroup = _contexts.game.GetGroup(GameMatcher.Block);
+        _blockGroup = _contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Block, GameMatcher.Viewable));
         _pointerGroup = _contexts.game.GetGroup(GameMatcher.Pointer);
     }
 
