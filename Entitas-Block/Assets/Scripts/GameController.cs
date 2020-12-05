@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
         contexts.game.SetGlobals(globals);
         contexts.game.SetUIRoot(uiRoot);
         contexts.game.SetText(text);
-        //JsonManager.Serialize("save.json");
+        JsonManager.Serialize("save.json");
 
         contexts.game.SetGameData(JsonManager.Deserialize("save.json"));
 

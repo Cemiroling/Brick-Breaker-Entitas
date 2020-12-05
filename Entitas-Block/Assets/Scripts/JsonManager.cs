@@ -7,7 +7,7 @@ public class JsonManager
     {
         int[,] _map =
         {
-            { 2, 2, 2, 2, 2, 3, 3, 3, 3, 3 },
+            { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
             { 1, 1, 0, 0, 1, 1, 1, 1, 1, 1 },
             { 1, 1, 0, 0, 1, 1, 1, 1, 1, 1 },
             { 1, 1, 0, 0, 1, 1, 0, 0, 0, 0 },
@@ -18,8 +18,24 @@ public class JsonManager
             { 0, 0, 0, 0, 1, 1, 0, 0, 1, 1 },
             { 1, 1, 1, 1, 1, 1, 0, 0, 1, 1 },
             { 1, 1, 1, 1, 1, 1, 0, 0, 1, 1 },
-            { 3, 3, 3, 3, 3, 2, 2, 2, 2, 2 }
+            { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 }
         };
+
+        //int[,] _map =
+        //{
+        //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 },
+        //    { 1, 1, 1, 1, 3, 1, 1, 1, 1, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+        //};
 
         GameData gameData = new GameData();
 
@@ -27,16 +43,16 @@ public class JsonManager
         gameData.ballsNumber = 10;
         gameData.visibleArea = 12;
 
-        gameData.blockStats.health = 12;
+        gameData.blockStats.health = 22;
 
         gameData.bombStats.health = 6;
         gameData.bombStats.area = 3;
         gameData.bombStats.damage = 1;
 
-        gameData.laserStats.health = 5;
+        gameData.laserStats.health = 20;
         gameData.laserStats.range = 3;
         gameData.laserStats.damage = 1;
-        gameData.laserStats.angles = new float[] {45, -45};
+        gameData.laserStats.angles = new float[] {45, -45, 0};
 
         string ToJson = JsonConvert.SerializeObject(gameData, Formatting.None);
 

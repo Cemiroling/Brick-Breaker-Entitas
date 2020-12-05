@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
-    private IGroup<GameEntity> _blockGroup; 
+    private IGroup<GameEntity> _blockGroup;
     private IGroup<GameEntity> _pointerGroup;
     public ProcessCollisionSystem(Contexts contexts) : base(contexts.game)
     {
@@ -36,29 +36,24 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                 {
                     entity.collision.self.health.value--;
                     entity.collision.self.text.value.text = entity.collision.self.health.value.ToString();
-                    //foreach (var block in _blockGroup.GetEntities())
-                    //{
-                    //    if (block.blockType.type == BlockType.SquareBlock)
-                    //    {
-                    //        if ((block.position.value - entity.collision.self.position.value).sqrMagnitude <= entity.collision.self.radius.value * entity.collision.self.radius.value)
-                    //        {
-                    //            block.health.value -= entity.collision.self.damage.value;
-                    //            block.text.value.text = block.health.value.ToString();
-                    //            if (block.health.value <= 0)
-                    //            {
-                    //                block.isDestroy = true;
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    Collider2D[] bombedBlocks = Physics2D.OverlapBoxAll(entity.collision.self.position.value, new Vector2(entity.collision.self.radius.value, entity.collision.self.radius.value), 0f);
+
                     foreach (var block in _blockGroup.GetEntities())
                     {
                         if (block.blockType.type == BlockType.SquareBlock)
                         {
-                            foreach (Collider2D br in bombedBlocks)
+                            for (int i = 0; i < 4; i++)
                             {
-                                if (GameObject.ReferenceEquals(block.prefab.prefab, br.gameObject))
+                                //DrawLine(new Vector2(entity.collision.self.position.value.x, entity.collision.self.position.value.y),
+                                //    new Vector2(entity.collision.self.position.value.x - entity.collision.self.radius.value - 0.5f + ((entity.collision.self.radius.value + 0.5f) * 2) * (i / 2),
+                                //    entity.collision.self.position.value.y - entity.collision.self.radius.value - 0.5f + ((entity.collision.self.radius.value + 0.5f) * 2) * (i % 2)),
+                                //    Color.white, 0.5f);
+
+                                if ((entity.collision.self.position.value.x - 0.5f - entity.collision.self.radius.value
+                                    < block.position.value.x - 0.5f + (i % 2) && block.position.value.x - 0.5f + (i % 2)
+                                    < entity.collision.self.position.value.x + 0.5f + entity.collision.self.radius.value) &&
+                                    (entity.collision.self.position.value.y - 0.5f - entity.collision.self.radius.value
+                                    < block.position.value.y - 0.5f + (i / 2) && block.position.value.y - 0.5f + (i / 2)
+                                    < entity.collision.self.position.value.y + 0.5f + entity.collision.self.radius.value))
                                 {
                                     block.health.value -= entity.collision.self.damage.value;
                                     block.text.value.text = block.health.value.ToString();
@@ -66,37 +61,78 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                                     {
                                         block.isDestroy = true;
                                     }
+                                    break;
                                 }
                             }
                         }
                     }
+
                     if (entity.collision.self.health.value <= 0)
                     {
                         entity.collision.self.isDestroy = true;
                     }
+
+                    //Collider2D[] bombedBlocks = Physics2D.OverlapBoxAll(entity.collision.self.position.value, new Vector2(entity.collision.self.radius.value, entity.collision.self.radius.value), 0f);
+                    //foreach (var block in _blockGroup.GetEntities())
+                    //{
+                    //    if (block.blockType.type == BlockType.SquareBlock)
+                    //    {
+                    //        foreach (Collider2D br in bombedBlocks)
+                    //        {
+                    //            if (GameObject.ReferenceEquals(block.prefab.prefab, br.gameObject))
+                    //            {
+                    //                block.health.value -= entity.collision.self.damage.value;
+                    //                block.text.value.text = block.health.value.ToString();
+                    //                if (block.health.value <= 0)
+                    //                {
+                    //                    block.isDestroy = true;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                    //if (entity.collision.self.health.value <= 0)
+                    //{
+                    //    entity.collision.self.isDestroy = true;
+                    //}
                 }
                 if (entity.collision.self.blockType.type == BlockType.Laser)
                 {
                     entity.collision.self.health.value--;
                     entity.collision.self.text.value.text = entity.collision.self.health.value.ToString();
 
+                    Vector2 rotatedCorner = new Vector2();
+                    Vector2 offset = new Vector2();
+                    bool hit = false;
 
                     foreach (float angle in entity.collision.self.laserDirections.angle)
                     {
-                        Collider2D[] laseredBlocks = Physics2D.OverlapBoxAll(entity.collision.self.position.value, new Vector2(entity.collision.self.radius.value * 2, 0.3f), angle);
-                        foreach (Collider2D br in laseredBlocks)
+                        DrawLine(
+                            new Vector2(Rotate(Vector2.left * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
+                                        Rotate(Vector2.left * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
+                            new Vector2(Rotate(Vector2.right * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
+                                        Rotate(Vector2.right * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
+                                        Color.red, 0.2f);
+                    }
+
+                    foreach (var block in _blockGroup.GetEntities())
+                    {
+                        if (block.blockType.type == BlockType.SquareBlock &&
+                            (block.position.value - entity.collision.self.position.value).sqrMagnitude <= (entity.collision.self.radius.value + 0.5f) * (entity.collision.self.radius.value + 0.5f))
                         {
-                            DrawLine(
-                                new Vector2(rotate(Vector2.left * entity.collision.self.radius.value, angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
-                                            rotate(Vector2.left * entity.collision.self.radius.value, angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
-                                new Vector2(rotate(Vector2.right * entity.collision.self.radius.value, angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
-                                            rotate(Vector2.right * entity.collision.self.radius.value, angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
-                                            Color.red, 0.2f);
-                            foreach (var block in _blockGroup.GetEntities())
+                            foreach (float angle in entity.collision.self.laserDirections.angle)
                             {
-                                if (block.blockType.type == BlockType.SquareBlock)
+                                for (int i = 0; i < 9; i++)
                                 {
-                                    if (GameObject.ReferenceEquals(block.prefab.prefab, br.gameObject))
+                                    offset = new Vector2((0.5f * (i % 3)) - 0.5f, (0.5f * (i / 3)) - 0.5f);
+                                    rotatedCorner = Rotate(block.position.value - entity.collision.self.position.value + offset, -angle * Mathf.Deg2Rad) + entity.collision.self.position.value;
+                                    //DrawLine(entity.collision.self.position.value, rotatedCorner, Color.white, 0.4f);
+                                    if ((entity.collision.self.position.value.x - 0.5f - entity.collision.self.radius.value
+                                        < rotatedCorner.x && rotatedCorner.x
+                                        < entity.collision.self.position.value.x + 0.5f + entity.collision.self.radius.value) &&
+                                        (entity.collision.self.position.value.y - 0.15f
+                                        < rotatedCorner.y && rotatedCorner.y
+                                        < entity.collision.self.position.value.y + 0.15f))
                                     {
                                         block.health.value -= entity.collision.self.damage.value;
                                         block.text.value.text = block.health.value.ToString();
@@ -104,32 +140,73 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                                         {
                                             block.isDestroy = true;
                                         }
+                                        hit = true;
+                                        break;
                                     }
+                                }
+                                if (hit)
+                                {
+                                    hit = false;
+                                    break;
                                 }
                             }
                         }
                     }
+
+
                     if (entity.collision.self.health.value <= 0)
                     {
                         entity.collision.self.isDestroy = true;
                     }
+                    //foreach (float angle in entity.collision.self.laserDirections.angle)
+                    //{
+                    //    Collider2D[] laseredBlocks = Physics2D.OverlapBoxAll(entity.collision.self.position.value, new Vector2(entity.collision.self.radius.value * 2, 0.3f), angle);
+                    //    foreach (Collider2D br in laseredBlocks)
+                    //    {
+                    //        DrawLine(
+                    //            new Vector2(rotate(Vector2.left * entity.collision.self.radius.value, angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
+                    //                        rotate(Vector2.left * entity.collision.self.radius.value, angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
+                    //            new Vector2(rotate(Vector2.right * entity.collision.self.radius.value, angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
+                    //                        rotate(Vector2.right * entity.collision.self.radius.value, angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
+                    //                        Color.red, 0.2f);
+                    //        foreach (var block in _blockGroup.GetEntities())
+                    //        {
+                    //            if (block.blockType.type == BlockType.SquareBlock)
+                    //            {
+                    //                if (GameObject.ReferenceEquals(block.prefab.prefab, br.gameObject))
+                    //                {
+                    //                    block.health.value -= entity.collision.self.damage.value;
+                    //                    block.text.value.text = block.health.value.ToString();
+                    //                    if (block.health.value <= 0)
+                    //                    {
+                    //                        block.isDestroy = true;
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                    //if (entity.collision.self.health.value <= 0)
+                    //{
+                    //    entity.collision.self.isDestroy = true;
+                    //}
                 }
             }
             if (entity.collision.self.isBoundary)
             {
                 if (entity.collision.other.isBall)
-                {                     
-                    if(!_pointerGroup.GetSingleEntity().hasNewPointerPosition)
+                {
+                    if (!_pointerGroup.GetSingleEntity().hasNewPointerPosition)
                     {
-                        _pointerGroup.GetSingleEntity().AddNewPointerPosition(new Vector2(entity.collision.other.prefab.prefab.transform.position.x, _pointerGroup.GetSingleEntity().position.value.y));                       
+                        _pointerGroup.GetSingleEntity().AddNewPointerPosition(new Vector2(entity.collision.other.prefab.prefab.transform.position.x, _pointerGroup.GetSingleEntity().position.value.y));
                     }
-                    entity.collision.other.isDestroy = true; 
+                    entity.collision.other.isDestroy = true;
                 }
             }
             entity.isDestroy = true;
         }
     }
-    public static Vector2 rotate(Vector2 v, float delta)
+    public static Vector2 Rotate(Vector2 v, float delta)
     {
         return new Vector2(
             v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
