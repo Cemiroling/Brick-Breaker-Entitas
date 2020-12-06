@@ -16,32 +16,34 @@ public static class GameComponentsLookup {
     public const int BoundaryType = 5;
     public const int ClickInput = 6;
     public const int Collision = 7;
-    public const int Damage = 8;
-    public const int Data = 9;
-    public const int Destroy = 10;
-    public const int Direction = 11;
-    public const int GameData = 12;
-    public const int Globals = 13;
-    public const int Health = 14;
-    public const int Iteration = 15;
-    public const int LaserDirections = 16;
-    public const int MoveBlock = 17;
-    public const int MoveInput = 18;
-    public const int NewPointerPosition = 19;
-    public const int Pointer = 20;
-    public const int Position = 21;
-    public const int Prefab = 22;
-    public const int Radius = 23;
-    public const int ScaleMultiplier = 24;
-    public const int SetNewPointerPosition = 25;
-    public const int SpawnBall = 26;
-    public const int Text = 27;
-    public const int Timer = 28;
-    public const int TimerEnd = 29;
-    public const int UIRoot = 30;
-    public const int Viewable = 31;
+    public const int Cooldown = 8;
+    public const int Damage = 9;
+    public const int Data = 10;
+    public const int Destroy = 11;
+    public const int Direction = 12;
+    public const int GameData = 13;
+    public const int Globals = 14;
+    public const int Health = 15;
+    public const int Iteration = 16;
+    public const int LaserDirections = 17;
+    public const int Line = 18;
+    public const int MoveBlock = 19;
+    public const int MoveInput = 20;
+    public const int NewPointerPosition = 21;
+    public const int Pointer = 22;
+    public const int Position = 23;
+    public const int Prefab = 24;
+    public const int Radius = 25;
+    public const int ScaleMultiplier = 26;
+    public const int SetNewPointerPosition = 27;
+    public const int SpawnBall = 28;
+    public const int Text = 29;
+    public const int Timer = 30;
+    public const int TimerEnd = 31;
+    public const int UIRoot = 32;
+    public const int Viewable = 33;
 
-    public const int TotalComponents = 32;
+    public const int TotalComponents = 34;
 
     public static readonly string[] componentNames = {
         "Ball",
@@ -52,6 +54,7 @@ public static class GameComponentsLookup {
         "BoundaryType",
         "ClickInput",
         "Collision",
+        "Cooldown",
         "Damage",
         "Data",
         "Destroy",
@@ -61,6 +64,7 @@ public static class GameComponentsLookup {
         "Health",
         "Iteration",
         "LaserDirections",
+        "Line",
         "MoveBlock",
         "MoveInput",
         "NewPointerPosition",
@@ -87,6 +91,7 @@ public static class GameComponentsLookup {
         typeof(BoundaryTypeComponent),
         typeof(ClickInputComponent),
         typeof(CollisionComponent),
+        typeof(CooldownComponent),
         typeof(DamageComponent),
         typeof(DataComponent),
         typeof(DestroyComponent),
@@ -96,6 +101,7 @@ public static class GameComponentsLookup {
         typeof(HealthComponent),
         typeof(IterationComponent),
         typeof(LaserDirectionsComponent),
+        typeof(LineComponent),
         typeof(MoveBlockComponent),
         typeof(MoveInputComponent),
         typeof(NewPointerPositionComponent),

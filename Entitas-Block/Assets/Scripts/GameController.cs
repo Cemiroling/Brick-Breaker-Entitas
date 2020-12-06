@@ -40,6 +40,7 @@ public class GameController : MonoBehaviour
             .Add(new MovingBlockSystem(contexts))
             .Add(new ChangePointerPositionSystem(contexts))
             .Add(new SetNewTurnSystem(contexts))
+            .Add(new CooldownSystem(contexts))
 
             .Add(new AddBlockViewSystem(contexts))
             .Add(new AddBallViewSystem(contexts))

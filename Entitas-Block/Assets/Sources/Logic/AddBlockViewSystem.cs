@@ -1,26 +1,28 @@
 ﻿using Entitas;
+using Entitas.Unity;
 using System.Collections.Generic;
 using UnityEngine;
-using Entitas.Unity;
 using UnityEngine.UI;
 
 public class AddBlockViewSystem : ReactiveSystem<GameEntity>
 {
     private Contexts _contexts;
-    private RectTransform uiRoot;
-    private Text textPref;
+    private RectTransform _uiRoot;
+    private Text _textPref;
+    private LineRenderer _linePref;
     public AddBlockViewSystem(Contexts contexts) : base(contexts.game)
     {
         _contexts = contexts;
-        uiRoot = _contexts.game.uIRoot.value;
-        textPref = _contexts.game.text.value;
+        _uiRoot = _contexts.game.uIRoot.value;
+        _textPref = _contexts.game.text.value;
+        _linePref = _contexts.game.globals.value.linePrefab.GetComponent<LineRenderer>();
     }
 
     protected override void Execute(List<GameEntity> entities)
     {
         foreach (var entity in entities)
         {
-            Text text = GameObject.Instantiate(textPref, uiRoot);
+            Text text = GameObject.Instantiate(_textPref, _uiRoot);
             text.text = entity.health.value.ToString();
             RectTransform textTransform = text.GetComponent<RectTransform>();
             textTransform.anchoredPosition = new Vector2(entity.position.value.x * 100, entity.position.value.y * 100);
@@ -46,7 +48,7 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
                 {
                     gameobject.transform.position = entity.position.value;
                     gameobject.transform.localScale *= entity.scaleMultiplier.value;
-                    gameobject.transform.rotation = Quaternion.Euler(0 , 0, 90);
+                    gameobject.transform.rotation = Quaternion.Euler(0, 0, 90);
                 }
             }
             if (entity.blockType.type == BlockType.TRTriangleBlock)
@@ -100,6 +102,21 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
             {
                 var gameobject = Object.Instantiate(_contexts.game.globals.value.laserPrefab);
                 entity.AddPrefab(gameobject);
+                List<LineRenderer> lines = new List<LineRenderer>();
+
+                foreach (float angle in entity.laserDirections.angle)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        LineRenderer line = Object.Instantiate(_linePref);
+                        line.positionCount = 2;
+                        line.SetPosition(0, entity.position.value);
+                        line.SetPosition(1, Rotate(Vector2.left * (entity.radius.value + 0.5f), (angle + i * 180) * Mathf.Deg2Rad) + entity.position.value);
+                        line.enabled = false;
+                        lines.Add(line);
+                    }
+                }
+                entity.AddLine(lines);
                 gameobject.Link(entity);
                 if (entity.hasPosition)
                 {
@@ -107,7 +124,17 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
                     gameobject.transform.localScale *= entity.scaleMultiplier.value;
                 }
             }
+
+
         }
+    }
+
+    public Vector2 Rotate(Vector2 v, float delta)
+    {
+        return new Vector2(
+            v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
+            v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
+        );
     }
 
     protected override bool Filter(GameEntity entity)

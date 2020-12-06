@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: New Globals
   m_EditorClassIdentifier: 
   blockPrefab: {fileID: 4291547316646527134, guid: e34262c2726b31944bb4a80913afadc5, type: 3}
+  triangleBlockPrefab: {fileID: 4869661641634313795, guid: c2a1d5a1a65b2f3478366fd112646d8f, type: 3}
   ballPrefab: {fileID: 4414959586870706794, guid: b06f79c60b2169146b40995ab4ae6a88, type: 3}
   boundaryPrefab: {fileID: 2846442009542679174, guid: 5ae7817644f912741a91a94ff700193b, type: 3}
   pointerPrefab: {fileID: 3093058145034516232, guid: d2f9730217c417f4eab69530095edfa7, type: 3}
   bombPrefab: {fileID: 6994301727840628646, guid: f563268753609f447ac6a901be214066, type: 3}
   laserPrefab: {fileID: 119320980579968659, guid: 4c7f0abfa3430b54eabb53b2617bf2f3, type: 3}
+  linePrefab: {fileID: 5949882473197502893, guid: e2cb8526981a9e443bf98e2236aeca9e, type: 3}

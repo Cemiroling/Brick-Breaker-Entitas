@@ -32,10 +32,22 @@ public class MovingBlockSystem : ReactiveSystem<GameEntity>
                         block.prefab.prefab.transform.position += minusPosition3;
                         RectTransform textTransform = block.text.value.GetComponent<RectTransform>();
                         textTransform.anchoredPosition += minusPosition2 * 100;
+
+                        if (block.hasLine)
+                        {
+                            foreach (var line in block.line.lines)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    Vector2 v2 = line.GetPosition(i);
+                                    v2.y--;
+                                    line.SetPosition(i, v2);
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        Debug.Log("Works");
                         block.isViewable = true;
                     }
                 }

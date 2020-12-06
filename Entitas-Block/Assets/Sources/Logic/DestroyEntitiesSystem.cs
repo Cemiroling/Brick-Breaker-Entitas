@@ -25,6 +25,13 @@ public class DestroyEntitiesSystem : ReactiveSystem<GameEntity>
             {
                 GameObject.Destroy(entity.text.value.gameObject);
             }
+            if (entity.hasLine)
+            {
+                foreach (var line in entity.line.lines)
+                {
+                    GameObject.Destroy(line.gameObject);
+                }
+            }
             entity.Destroy();
         }
     }

@@ -155,16 +155,37 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                     Vector2 rotatedCorner = new Vector2();
                     Vector2 offset = new Vector2();
                     bool hit = false;
-
-                    foreach (float angle in entity.collision.self.laserDirections.angle)
+                    LineRenderer line = entity.collision.self.prefab.prefab.GetComponent<LineRenderer>();
+                    //for (int i = 0; i < entity.collision.self.laserDirections.angle.Length; i++)
+                    //{
+                    //    line.positionCount = entity.collision.self.laserDirections.angle.Length * 3;
+                    //    line.SetPosition(i * 3 + 0, Rotate(Vector2.left * (entity.collision.self.radius.value + 0.5f), entity.collision.self.laserDirections.angle[i] * Mathf.Deg2Rad));
+                    //    line.SetPosition(i * 3 + 1, Rotate(Vector2.right * (entity.collision.self.radius.value + 0.5f), entity.collision.self.laserDirections.angle[i] * Mathf.Deg2Rad));
+                    //    line.SetPosition(i * 3 + 2, new Vector2(0, 0));
+                    //}
+                    foreach(LineRenderer _line in entity.collision.self.line.lines)
                     {
-                        DrawLine(
-                            new Vector2(Rotate(Vector2.left * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
-                                        Rotate(Vector2.left * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
-                            new Vector2(Rotate(Vector2.right * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
-                                        Rotate(Vector2.right * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
-                                        Color.red, 0.2f);
+                        _line.enabled = true;
                     }
+
+                    if (entity.collision.self.hasCooldown)
+                    {
+                        entity.collision.self.ReplaceCooldown(0.1f);
+                    }
+                    else
+                        entity.collision.self.AddCooldown(0.1f);
+                    //foreach (float angle in entity.collision.self.laserDirections.angle)
+                    //{
+                    //    line.SetPosition(0, Rotate(Vector2.left * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad));
+                    //    line.SetPosition(1, Rotate(Vector2.right * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad));
+                    //    line.SetPosition(2, new Vector2(0, 0));
+                    //    //DrawLine(
+                    //    //    new Vector2(Rotate(Vector2.left * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
+                    //    //                Rotate(Vector2.left * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
+                    //    //    new Vector2(Rotate(Vector2.right * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).x + entity.collision.self.position.value.x,
+                    //    //                Rotate(Vector2.right * (entity.collision.self.radius.value + 0.5f), angle * Mathf.Deg2Rad).y + entity.collision.self.position.value.y),
+                    //    //                Color.red, 0.2f);
+                    //}
 
                     foreach (var block in _blockGroup.GetEntities())
                     {
@@ -235,8 +256,8 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                                     }
                                     rotatedCorner = Rotate(block.position.value - entity.collision.self.position.value + pointPos, -angle * Mathf.Deg2Rad) + entity.collision.self.position.value;
 
-                                    DrawLine(new Vector2(pointPos.x + 0.1f + block.position.value.x + 1, pointPos.y + 0.1f + block.position.value.y),
-                                        new Vector2(pointPos.x + block.position.value.x + 1, pointPos.y + block.position.value.y), Color.white, 0.4f);
+                                    //DrawLine(new Vector2(pointPos.x + 0.1f + block.position.value.x + 1, pointPos.y + 0.1f + block.position.value.y),
+                                    //    new Vector2(pointPos.x + block.position.value.x + 1, pointPos.y + block.position.value.y), Color.white, 0.4f);
                                     if ((entity.collision.self.position.value.x - 0.5f - entity.collision.self.radius.value
                                         < rotatedCorner.x && rotatedCorner.x
                                         < entity.collision.self.position.value.x + 0.5f + entity.collision.self.radius.value) &&

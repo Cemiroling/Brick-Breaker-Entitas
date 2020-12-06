@@ -11,4 +11,5 @@ public class Globals : ScriptableObject
     public GameObject pointerPrefab;
     public GameObject bombPrefab;
     public GameObject laserPrefab;
+    public GameObject linePrefab;
 }
