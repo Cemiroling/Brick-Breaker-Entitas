@@ -5,6 +5,7 @@ using UnityEngine;
 public class Globals : ScriptableObject
 {
     public GameObject blockPrefab;
+    public GameObject triangleBlockPrefab;
     public GameObject ballPrefab;
     public GameObject boundaryPrefab;
     public GameObject pointerPrefab;

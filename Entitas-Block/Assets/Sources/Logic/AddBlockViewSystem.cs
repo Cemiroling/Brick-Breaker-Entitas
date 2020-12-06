@@ -37,6 +37,54 @@ public class AddBlockViewSystem : ReactiveSystem<GameEntity>
                     gameobject.transform.localScale *= entity.scaleMultiplier.value;
                 }
             }
+            if (entity.blockType.type == BlockType.TLTriangleBlock)
+            {
+                var gameobject = Object.Instantiate(_contexts.game.globals.value.triangleBlockPrefab);
+                entity.AddPrefab(gameobject);
+                gameobject.Link(entity);
+                if (entity.hasPosition)
+                {
+                    gameobject.transform.position = entity.position.value;
+                    gameobject.transform.localScale *= entity.scaleMultiplier.value;
+                    gameobject.transform.rotation = Quaternion.Euler(0 , 0, 90);
+                }
+            }
+            if (entity.blockType.type == BlockType.TRTriangleBlock)
+            {
+                var gameobject = Object.Instantiate(_contexts.game.globals.value.triangleBlockPrefab);
+                entity.AddPrefab(gameobject);
+                gameobject.Link(entity);
+                if (entity.hasPosition)
+                {
+                    gameobject.transform.position = entity.position.value;
+                    gameobject.transform.localScale *= entity.scaleMultiplier.value;
+                    gameobject.transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+            }
+            if (entity.blockType.type == BlockType.BRTriangleBlock)
+            {
+                var gameobject = Object.Instantiate(_contexts.game.globals.value.triangleBlockPrefab);
+                entity.AddPrefab(gameobject);
+                gameobject.Link(entity);
+                if (entity.hasPosition)
+                {
+                    gameobject.transform.position = entity.position.value;
+                    gameobject.transform.localScale *= entity.scaleMultiplier.value;
+                    gameobject.transform.rotation = Quaternion.Euler(0, 0, 270);
+                }
+            }
+            if (entity.blockType.type == BlockType.BLTriangleBlock)
+            {
+                var gameobject = Object.Instantiate(_contexts.game.globals.value.triangleBlockPrefab);
+                entity.AddPrefab(gameobject);
+                gameobject.Link(entity);
+                if (entity.hasPosition)
+                {
+                    gameobject.transform.position = entity.position.value;
+                    gameobject.transform.localScale *= entity.scaleMultiplier.value;
+                    gameobject.transform.rotation = Quaternion.Euler(0, 0, 180);
+                }
+            }
             if (entity.blockType.type == BlockType.Bomb)
             {
                 var gameobject = Object.Instantiate(_contexts.game.globals.value.bombPrefab);

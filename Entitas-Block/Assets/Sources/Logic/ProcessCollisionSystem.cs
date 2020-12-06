@@ -20,7 +20,11 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
         {
             if (entity.collision.self.isBlock)
             {
-                if (entity.collision.self.blockType.type == BlockType.SquareBlock)
+                if (entity.collision.self.blockType.type == BlockType.SquareBlock ||
+                    entity.collision.self.blockType.type == BlockType.BRTriangleBlock ||
+                    entity.collision.self.blockType.type == BlockType.TRTriangleBlock ||
+                    entity.collision.self.blockType.type == BlockType.BLTriangleBlock ||
+                    entity.collision.self.blockType.type == BlockType.TLTriangleBlock)
                 {
                     if (entity.collision.other.isBall)
                     {
@@ -36,6 +40,7 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                 {
                     entity.collision.self.health.value--;
                     entity.collision.self.text.value.text = entity.collision.self.health.value.ToString();
+                    Vector2 pointPos;
 
                     foreach (var block in _blockGroup.GetEntities())
                     {
@@ -47,12 +52,57 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                                 //    new Vector2(entity.collision.self.position.value.x - entity.collision.self.radius.value - 0.5f + ((entity.collision.self.radius.value + 0.5f) * 2) * (i / 2),
                                 //    entity.collision.self.position.value.y - entity.collision.self.radius.value - 0.5f + ((entity.collision.self.radius.value + 0.5f) * 2) * (i % 2)),
                                 //    Color.white, 0.5f);
+                                pointPos = new Vector2(block.scaleMultiplier.value * (i % 2 - 0.5f), block.scaleMultiplier.value * (i / 2 - 0.5f));
 
                                 if ((entity.collision.self.position.value.x - 0.5f - entity.collision.self.radius.value
-                                    < block.position.value.x + block.scaleMultiplier.value * (i % 2 - 0.5) && block.position.value.x - block.scaleMultiplier.value * ((i % 2) - 0.5)
+                                    < block.position.value.x + pointPos.x && block.position.value.x + pointPos.x
                                     < entity.collision.self.position.value.x + 0.5f + entity.collision.self.radius.value) &&
-                                    (entity.collision.self.position.value.y - block.scaleMultiplier.value / 2 - entity.collision.self.radius.value
-                                    < block.position.value.y - block.scaleMultiplier.value / 2 + (i / 2) && block.position.value.y - block.scaleMultiplier.value / 2 + (i / 2)
+                                    (entity.collision.self.position.value.y - 0.5f - entity.collision.self.radius.value
+                                    < block.position.value.y + pointPos.y && block.position.value.y + pointPos.y
+                                    < entity.collision.self.position.value.y + 0.5f + entity.collision.self.radius.value))
+                                {
+                                    block.health.value -= entity.collision.self.damage.value;
+                                    block.text.value.text = block.health.value.ToString();
+                                    if (block.health.value <= 0)
+                                    {
+                                        block.isDestroy = true;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        if (block.blockType.type == BlockType.TLTriangleBlock ||
+                            block.blockType.type == BlockType.TRTriangleBlock ||
+                            block.blockType.type == BlockType.BLTriangleBlock ||
+                            block.blockType.type == BlockType.BRTriangleBlock)
+                        {
+                            for (int i = 0; i < 9; i++)
+                            {
+                                pointPos = new Vector2(0, 0);
+                                if (block.blockType.type == BlockType.TLTriangleBlock)
+                                {
+                                    pointPos = new Vector2(block.scaleMultiplier.value * (((i % 3 * (i / 3 * 0.5f)) - 1) / 2f), block.scaleMultiplier.value * (((i / 3) - 1) / 2f));
+                                }
+                                if (block.blockType.type == BlockType.TRTriangleBlock)
+                                {
+                                    pointPos = new Vector2(block.scaleMultiplier.value * ((2 - (i % 3 * (i / 3 * 0.5f)) - 1) / 2f), block.scaleMultiplier.value * (((i / 3) - 1) / 2f));
+                                }
+                                if (block.blockType.type == BlockType.BLTriangleBlock)
+                                {
+                                    pointPos = new Vector2(block.scaleMultiplier.value * (((i % 3 * ((2 - (i / 3)) * 0.5f)) - 1) / 2f), block.scaleMultiplier.value * (((i / 3) - 1) / 2f));
+                                }
+                                if (block.blockType.type == BlockType.BRTriangleBlock)
+                                {
+                                    pointPos = new Vector2(block.scaleMultiplier.value * ((2 - (i % 3 * ((2 - (i / 3)) * 0.5f)) - 1) / 2f), block.scaleMultiplier.value * (((i / 3) - 1) / 2f));
+                                }
+                                Debug.Log(pointPos);
+                                DrawLine(new Vector2(pointPos.x + 0.1f + block.position.value.x + 1, pointPos.y + 0.1f + block.position.value.y),
+                                    new Vector2(pointPos.x + block.position.value.x + 1, pointPos.y + block.position.value.y), Color.white, 0.4f);
+                                if ((entity.collision.self.position.value.x - 0.5f - entity.collision.self.radius.value
+                                    < block.position.value.x + pointPos.x && block.position.value.x + pointPos.x
+                                    < entity.collision.self.position.value.x + 0.5f + entity.collision.self.radius.value) &&
+                                    (entity.collision.self.position.value.y - 0.5f - entity.collision.self.radius.value
+                                    < block.position.value.y + pointPos.y && block.position.value.y + pointPos.y
                                     < entity.collision.self.position.value.y + 0.5f + entity.collision.self.radius.value))
                                 {
                                     block.health.value -= entity.collision.self.damage.value;
@@ -100,6 +150,7 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                 {
                     entity.collision.self.health.value--;
                     entity.collision.self.text.value.text = entity.collision.self.health.value.ToString();
+                    Vector2 pointPos;
 
                     Vector2 rotatedCorner = new Vector2();
                     Vector2 offset = new Vector2();
@@ -118,9 +169,9 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                     foreach (var block in _blockGroup.GetEntities())
                     {
                         if (block.blockType.type == BlockType.SquareBlock &&
-                            (block.position.value - entity.collision.self.position.value).sqrMagnitude <= 
-                            (entity.collision.self.radius.value + entity.collision.self.scaleMultiplier.value / 2 + block.scaleMultiplier.value / 2) * 
-                            (entity.collision.self.radius.value + entity.collision.self.scaleMultiplier.value / 2+ block.scaleMultiplier.value / 2))
+                            (block.position.value - entity.collision.self.position.value).sqrMagnitude <=
+                            (entity.collision.self.radius.value + entity.collision.self.scaleMultiplier.value / 2 + block.scaleMultiplier.value / 2) *
+                            (entity.collision.self.radius.value + entity.collision.self.scaleMultiplier.value / 2 + block.scaleMultiplier.value / 2))
                         {
                             foreach (float angle in entity.collision.self.laserDirections.angle)
                             {
@@ -153,9 +204,64 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
                                 }
                             }
                         }
+                        if ((block.blockType.type == BlockType.TLTriangleBlock ||
+                            block.blockType.type == BlockType.TRTriangleBlock ||
+                            block.blockType.type == BlockType.BLTriangleBlock ||
+                            block.blockType.type == BlockType.BRTriangleBlock) &&
+                            (block.position.value - entity.collision.self.position.value).sqrMagnitude <=
+                            (entity.collision.self.radius.value + entity.collision.self.scaleMultiplier.value / 2 + block.scaleMultiplier.value / 2) *
+                            (entity.collision.self.radius.value + entity.collision.self.scaleMultiplier.value / 2 + block.scaleMultiplier.value / 2))
+                        {
+                            foreach (float angle in entity.collision.self.laserDirections.angle)
+                            {
+                                for (int i = 0; i < 9; i++)
+                                {
+                                    pointPos = new Vector2(0, 0);
+                                    if (block.blockType.type == BlockType.TLTriangleBlock)
+                                    {
+                                        pointPos = new Vector2(block.scaleMultiplier.value * (((i % 3 * (i / 3 * 0.5f)) - 1) / 2f), block.scaleMultiplier.value * (((i / 3) - 1) / 2f));
+                                    }
+                                    if (block.blockType.type == BlockType.TRTriangleBlock)
+                                    {
+                                        pointPos = new Vector2(block.scaleMultiplier.value * ((2 - (i % 3 * (i / 3 * 0.5f)) - 1) / 2f), block.scaleMultiplier.value * (((i / 3) - 1) / 2f));
+                                    }
+                                    if (block.blockType.type == BlockType.BLTriangleBlock)
+                                    {
+                                        pointPos = new Vector2(block.scaleMultiplier.value * (((i % 3 * ((2 - (i / 3)) * 0.5f)) - 1) / 2f), block.scaleMultiplier.value * (((i / 3) - 1) / 2f));
+                                    }
+                                    if (block.blockType.type == BlockType.BRTriangleBlock)
+                                    {
+                                        pointPos = new Vector2(block.scaleMultiplier.value * ((2 - (i % 3 * ((2 - (i / 3)) * 0.5f)) - 1) / 2f), block.scaleMultiplier.value * (((i / 3) - 1) / 2f));
+                                    }
+                                    rotatedCorner = Rotate(block.position.value - entity.collision.self.position.value + pointPos, -angle * Mathf.Deg2Rad) + entity.collision.self.position.value;
+
+                                    DrawLine(new Vector2(pointPos.x + 0.1f + block.position.value.x + 1, pointPos.y + 0.1f + block.position.value.y),
+                                        new Vector2(pointPos.x + block.position.value.x + 1, pointPos.y + block.position.value.y), Color.white, 0.4f);
+                                    if ((entity.collision.self.position.value.x - 0.5f - entity.collision.self.radius.value
+                                        < rotatedCorner.x && rotatedCorner.x
+                                        < entity.collision.self.position.value.x + 0.5f + entity.collision.self.radius.value) &&
+                                        (entity.collision.self.position.value.y - 0.15f
+                                        < rotatedCorner.y && rotatedCorner.y
+                                        < entity.collision.self.position.value.y + 0.15f))
+                                    {
+                                        block.health.value -= entity.collision.self.damage.value;
+                                        block.text.value.text = block.health.value.ToString();
+                                        if (block.health.value <= 0)
+                                        {
+                                            block.isDestroy = true;
+                                        }
+                                        hit = true;
+                                        break;
+                                    }
+                                }
+                                if (hit)
+                                {
+                                    hit = false;
+                                    break;
+                                }
+                            }
+                        }
                     }
-
-
                     if (entity.collision.self.health.value <= 0)
                     {
                         entity.collision.self.isDestroy = true;
@@ -223,8 +329,8 @@ public class ProcessCollisionSystem : ReactiveSystem<GameEntity>
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         lr.startColor = color;
         lr.endColor = Color.white;
-        lr.startWidth = 0.3f;
-        lr.endWidth = 0.3f;
+        lr.startWidth = 0.1f;
+        lr.endWidth = 0.1f;
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
         GameObject.Destroy(myLine, duration);

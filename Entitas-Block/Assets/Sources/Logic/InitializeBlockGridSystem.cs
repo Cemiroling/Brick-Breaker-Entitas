@@ -54,6 +54,46 @@ public class InitializeBlockGridSystem : IInitializeSystem
                         laser.AddScaleMultiplier(_contexts.game.gameData.value.laserStats.scale);
                         laser.isBlock = true;
                         break;
+                    case 4:
+                        var TLBlock = _contexts.game.CreateEntity();
+                        TLBlock.AddPosition(new Vector2(j - 4.5f, i + 0.5f + Screen.height / 200f - _contexts.game.gameData.value.visibleArea));
+                        if (TLBlock.position.value.y < Screen.height / 200f)
+                            TLBlock.isViewable = true;
+                        TLBlock.AddHealth(_contexts.game.gameData.value.blockStats.health);
+                        TLBlock.AddBlockType(BlockType.TLTriangleBlock);
+                        TLBlock.AddScaleMultiplier(_contexts.game.gameData.value.blockStats.scale);
+                        TLBlock.isBlock = true;
+                        break;
+                    case 5:
+                        var TRBlock = _contexts.game.CreateEntity();
+                        TRBlock.AddPosition(new Vector2(j - 4.5f, i + 0.5f + Screen.height / 200f - _contexts.game.gameData.value.visibleArea));
+                        if (TRBlock.position.value.y < Screen.height / 200f)
+                            TRBlock.isViewable = true;
+                        TRBlock.AddHealth(_contexts.game.gameData.value.blockStats.health);
+                        TRBlock.AddBlockType(BlockType.TRTriangleBlock);
+                        TRBlock.AddScaleMultiplier(_contexts.game.gameData.value.blockStats.scale);
+                        TRBlock.isBlock = true;
+                        break;
+                    case 6:
+                        var BRBlock = _contexts.game.CreateEntity();
+                        BRBlock.AddPosition(new Vector2(j - 4.5f, i + 0.5f + Screen.height / 200f - _contexts.game.gameData.value.visibleArea));
+                        if (BRBlock.position.value.y < Screen.height / 200f)
+                            BRBlock.isViewable = true;
+                        BRBlock.AddHealth(_contexts.game.gameData.value.blockStats.health);
+                        BRBlock.AddBlockType(BlockType.BRTriangleBlock);
+                        BRBlock.AddScaleMultiplier(_contexts.game.gameData.value.blockStats.scale);
+                        BRBlock.isBlock = true;
+                        break;
+                    case 7:
+                        var BLBlock = _contexts.game.CreateEntity();
+                        BLBlock.AddPosition(new Vector2(j - 4.5f, i + 0.5f + Screen.height / 200f - _contexts.game.gameData.value.visibleArea));
+                        if (BLBlock.position.value.y < Screen.height / 200f)
+                            BLBlock.isViewable = true;
+                        BLBlock.AddHealth(_contexts.game.gameData.value.blockStats.health);
+                        BLBlock.AddBlockType(BlockType.BLTriangleBlock);
+                        BLBlock.AddScaleMultiplier(_contexts.game.gameData.value.blockStats.scale);
+                        BLBlock.isBlock = true;
+                        break;
                 }
             }
         }
