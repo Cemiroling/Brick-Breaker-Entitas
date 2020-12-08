@@ -6,21 +6,21 @@ public class JsonManager
     public static void Serialize(string fileName)
     {
 
-        //int[,] _map =
-        //{
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
-        //    { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 }
-        //};
+        int[,] _map =
+        {
+            { 4, 1, 1, 1, 3, 3, 1, 1, 1, 4 },
+            { 5, 1, 1, 1, 3, 3, 1, 1, 1, 5 },
+            { 6, 1, 1, 1, 3, 3, 1, 1, 1, 6 },
+            { 7, 1, 1, 1, 3, 3, 1, 1, 1, 7 },
+            { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 3, 3, 1, 1, 1, 1 },
+            { 1, 1, 2, 2, 3, 3, 2, 2, 1, 1 }
+        };
 
 
         //int[,] _map =
@@ -39,29 +39,13 @@ public class JsonManager
         //    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
         //};
 
-        int[,] _map =
-        {
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 7, 7, 7, 7, 7, 7, 7, 7, 7, 0 },
-            { 7, 6, 0, 0, 6, 0, 0, 5, 7, 0 },
-            { 7, 0, 5, 0, 5, 0, 5, 0, 7, 0 },
-            { 7, 0, 0, 4, 4, 4, 0, 0, 7, 0 },
-            { 7, 6, 5, 4, 3, 4, 5, 6, 7, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-        };
-
         GameData gameData = new GameData();
 
         gameData.map = _map;
-        gameData.ballsNumber = 12;
+        gameData.ballsNumber = 10;
         gameData.visibleArea = 12;
 
-        gameData.blockStats.health = 88;
+        gameData.blockStats.health = 20;
         gameData.blockStats.scale = 1f;
 
         gameData.bombStats.health = 12;
@@ -77,12 +61,12 @@ public class JsonManager
 
         string ToJson = JsonConvert.SerializeObject(gameData, Formatting.None);
 
-        File.WriteAllText(Application.dataPath + "/" + fileName, ToJson);
+        File.WriteAllText(Path.Combine(Application.persistentDataPath, fileName), ToJson);
     }
 
     public static GameData Deserialize(string fileName)
     {
-        GameData gameData = JsonConvert.DeserializeObject<GameData>(File.ReadAllText(Application.dataPath + "/" + fileName));
+        GameData gameData = JsonConvert.DeserializeObject<GameData>(File.ReadAllText(Path.Combine(Application.persistentDataPath,fileName)));
 
         return gameData;
     }

@@ -20,3 +20,5 @@ MonoBehaviour:
   bombPrefab: {fileID: 6994301727840628646, guid: f563268753609f447ac6a901be214066, type: 3}
   laserPrefab: {fileID: 119320980579968659, guid: 4c7f0abfa3430b54eabb53b2617bf2f3, type: 3}
   linePrefab: {fileID: 5949882473197502893, guid: e2cb8526981a9e443bf98e2236aeca9e, type: 3}
+  winScreenPrefab: {fileID: 6192505160323619173, guid: 9872629e02f2c094ab6b7249184b76b5, type: 3}
+  loseScreenPrefab: {fileID: 3259891222264745450, guid: 324bbc5119992af429b9d7d3eca0c688, type: 3}

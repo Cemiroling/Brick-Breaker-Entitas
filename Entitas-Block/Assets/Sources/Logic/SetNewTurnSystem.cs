@@ -24,6 +24,12 @@ public class SetNewTurnSystem : ReactiveSystem<GameEntity>
 
             var moveBlocks = _contexts.game.CreateEntity();
             moveBlocks.isMoveBlock = true;
+
+            var checkLose = _contexts.game.CreateEntity();
+            checkLose.isCheckLose = true;
+
+            var checkWin = _contexts.game.CreateEntity();
+            checkWin.isCheckWin = true;
         }
     }
 

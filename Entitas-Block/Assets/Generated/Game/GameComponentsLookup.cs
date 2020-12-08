@@ -14,36 +14,42 @@ public static class GameComponentsLookup {
     public const int BlockType = 3;
     public const int Boundary = 4;
     public const int BoundaryType = 5;
-    public const int ClickInput = 6;
-    public const int Collision = 7;
-    public const int Cooldown = 8;
-    public const int Damage = 9;
-    public const int Data = 10;
-    public const int Destroy = 11;
-    public const int Direction = 12;
-    public const int GameData = 13;
-    public const int Globals = 14;
-    public const int Health = 15;
-    public const int Iteration = 16;
-    public const int LaserDirections = 17;
-    public const int Line = 18;
-    public const int MoveBlock = 19;
-    public const int MoveInput = 20;
-    public const int NewPointerPosition = 21;
-    public const int Pointer = 22;
-    public const int Position = 23;
-    public const int Prefab = 24;
-    public const int Radius = 25;
-    public const int ScaleMultiplier = 26;
-    public const int SetNewPointerPosition = 27;
-    public const int SpawnBall = 28;
-    public const int Text = 29;
-    public const int Timer = 30;
-    public const int TimerEnd = 31;
-    public const int UIRoot = 32;
-    public const int Viewable = 33;
+    public const int CheckLose = 6;
+    public const int CheckWin = 7;
+    public const int ClickInput = 8;
+    public const int Collision = 9;
+    public const int Cooldown = 10;
+    public const int Damage = 11;
+    public const int Data = 12;
+    public const int Destroy = 13;
+    public const int Direction = 14;
+    public const int GameData = 15;
+    public const int Globals = 16;
+    public const int Health = 17;
+    public const int Iteration = 18;
+    public const int LaserDirections = 19;
+    public const int Line = 20;
+    public const int LoseScreen = 21;
+    public const int MoveBlock = 22;
+    public const int MoveInput = 23;
+    public const int NewPointerPosition = 24;
+    public const int Pointer = 25;
+    public const int Position = 26;
+    public const int Prefab = 27;
+    public const int Radius = 28;
+    public const int Restart = 29;
+    public const int ScaleMultiplier = 30;
+    public const int SetMainMenu = 31;
+    public const int SetNewPointerPosition = 32;
+    public const int SpawnBall = 33;
+    public const int Text = 34;
+    public const int Timer = 35;
+    public const int TimerEnd = 36;
+    public const int UIRoot = 37;
+    public const int Viewable = 38;
+    public const int WinScreen = 39;
 
-    public const int TotalComponents = 34;
+    public const int TotalComponents = 40;
 
     public static readonly string[] componentNames = {
         "Ball",
@@ -52,6 +58,8 @@ public static class GameComponentsLookup {
         "BlockType",
         "Boundary",
         "BoundaryType",
+        "CheckLose",
+        "CheckWin",
         "ClickInput",
         "Collision",
         "Cooldown",
@@ -65,6 +73,7 @@ public static class GameComponentsLookup {
         "Iteration",
         "LaserDirections",
         "Line",
+        "LoseScreen",
         "MoveBlock",
         "MoveInput",
         "NewPointerPosition",
@@ -72,14 +81,17 @@ public static class GameComponentsLookup {
         "Position",
         "Prefab",
         "Radius",
+        "Restart",
         "ScaleMultiplier",
+        "SetMainMenu",
         "SetNewPointerPosition",
         "SpawnBall",
         "Text",
         "Timer",
         "TimerEnd",
         "UIRoot",
-        "Viewable"
+        "Viewable",
+        "WinScreen"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -89,6 +101,8 @@ public static class GameComponentsLookup {
         typeof(BlockTypeComponent),
         typeof(BoundaryComponent),
         typeof(BoundaryTypeComponent),
+        typeof(CheckLoseComponent),
+        typeof(CheckWinComponent),
         typeof(ClickInputComponent),
         typeof(CollisionComponent),
         typeof(CooldownComponent),
@@ -102,6 +116,7 @@ public static class GameComponentsLookup {
         typeof(IterationComponent),
         typeof(LaserDirectionsComponent),
         typeof(LineComponent),
+        typeof(LoseScreenComponent),
         typeof(MoveBlockComponent),
         typeof(MoveInputComponent),
         typeof(NewPointerPositionComponent),
@@ -109,13 +124,16 @@ public static class GameComponentsLookup {
         typeof(PositionComponent),
         typeof(PrefabComponent),
         typeof(RadiusComponent),
+        typeof(RestartComponent),
         typeof(ScaleMultiplierComponent),
+        typeof(SetMainMenuComponent),
         typeof(SetNewPointerPositionComponent),
         typeof(SpawnBallComponent),
         typeof(TextComponent),
         typeof(TimerComponent),
         typeof(TimerEndComponent),
         typeof(UIRootComponent),
-        typeof(ViewableComponent)
+        typeof(ViewableComponent),
+        typeof(WinScreenComponent)
     };
 }
